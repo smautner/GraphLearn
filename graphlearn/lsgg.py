@@ -67,22 +67,22 @@ class lsgg(object):
         #ud.gprint( [graph, orig_cip.graph, new_cip.graph, r ])
         return r
 
-    def _generate_candidates_cipnew(self, graph, orig_cip):
+    def _suggest_new_cips(self, graph, orig_cip):
             v = [e for e in self.productions[orig_cip.interface_hash].values()
                  if e.core_hash !=orig_cip.core_hash]
             random.shuffle(v)
             return v
 
-    def substitute_old_cip(self, graph, candidates_orig ):
-        for orig in candidates_orig:
-            candidates_new = self._generate_candidates_cipnew(graph, orig)
+    def _neighbors_given_orig_cip(self, graph, original_cip):
+        for orig in original_cip:
+            candidates_new = self._suggest_new_cips(graph, orig)
             for new in candidates_new:
                 r = self._substitute(graph,orig,new)
                 (yield r) if r else logger.log(5,'lsgg: a substitution returned None')
 
     def neighbors(self,graph):
         _label_preprocessing(graph)
-        for e in self.substitute_old_cip(graph, self._decompose(graph)):
+        for e in self._neighbors_given_orig_cip(graph, self._decompose(graph)):
             yield e
 
 
