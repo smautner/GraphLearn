@@ -161,7 +161,7 @@ def extract_core_and_interface(root_node=None,
     nodes = [node for i in range(radius + thickness + 1) for node in node_dict.get(i,[])]
     cip_graph = graph.subgraph(nodes).copy()
     for i in range(radius + 1):
-        for no in node_dict[i]:
+        for no in node_dict.get(i,[]):
             cip_graph.node[no]['core'] = True
 
     for i, di in enumerate (range(radius + 1, radius + thickness + 1)):
@@ -172,7 +172,7 @@ def extract_core_and_interface(root_node=None,
 
 
     # return a cip thing :)
-    core_nodes_count = sum([len(node_dict[x]) for x in range(radius + 1)])
+    core_nodes_count = sum([len(node_dict.get(x,[])) for x in range(radius + 1)])
     return CoreInterfacePair(interface_hash,
                       core_hash,
                       cip_graph,

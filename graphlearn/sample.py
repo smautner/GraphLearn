@@ -1,5 +1,4 @@
 import logging
-from graphlearn.utils import ascii
 logger = logging.getLogger(__name__)
 import utils
 

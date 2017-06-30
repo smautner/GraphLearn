@@ -2,10 +2,16 @@ import random
 import utils
 from collections import defaultdict
 from eden.graph import _label_preprocessing
+
+
+
+
 from lsgg_compose_util import extract_core_and_interface, core_substitution
 import utils_display as ud
 import logging
 logger = logging.getLogger(__name__)
+
+
 
 class lsgg(object):
     def __init__(self,
@@ -16,6 +22,10 @@ class lsgg(object):
         self.productions=defaultdict(dict)
         self.decompositionargs=decompositionargs
         self.filterargs=filterargs
+
+
+    def label_preprocessing(self,graph):
+        _label_preprocessing(graph)
 
     ###########
     #  FITTING
@@ -73,8 +83,8 @@ class lsgg(object):
             random.shuffle(v)
             return v
 
-    def _neighbors_given_orig_cip(self, graph, original_cip):
-        for orig in original_cip:
+    def _neighbors_given_orig_cips(self, graph, original_cips):
+        for orig in original_cips:
             candidates_new = self._suggest_new_cips(graph, orig)
             for new in candidates_new:
                 r = self._substitute(graph,orig,new)
@@ -82,7 +92,7 @@ class lsgg(object):
 
     def neighbors(self,graph):
         _label_preprocessing(graph)
-        for e in self._neighbors_given_orig_cip(graph, self._decompose(graph)):
+        for e in self._neighbors_given_orig_cips(graph, self._decompose(graph)):
             yield e
 
 
