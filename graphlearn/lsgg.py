@@ -21,24 +21,30 @@ class lsgg(object):
     #  FITTING
     ##########
     def fit(self,graphs):
-        self._read(graphs)
+        self._add(graphs)
         self._clean()
 
-    def _read(self,graphs):
+    def _add(self, graphs):
         for g in graphs:
-            for cip in self._get_all_cips(g):
+            for cip in self._decompose(g):
                 self._production_add_cip(cip)
 
-    def _get_all_cips(self, graph):
-        _label_preprocessing(graph)
+    def _rooted_decompose(self,graph,root):
         for radius in self.decompositionargs['radius_list']:
             for thickness in self.decompositionargs['thickness_list']:
-                for root in [ n for n in graph.nodes() if 'edge' not in graph.node[n]]:
-                    yield extract_core_and_interface(root_node=root,
+                yield extract_core_and_interface(root_node=root,
                                                      graph=graph,
                                                      radius=radius,
                                                      thickness=thickness,
                                                      hash_bitmask=self.decompositionargs['hash_bitmask'])
+
+    def _decompose(self, graph):
+        _label_preprocessing(graph)
+        for root in [ n for n in graph.nodes() if 'edge' not in graph.node[n]]:
+            for e in self._rooted_decompose(graph,root):
+                yield e
+
+
 
     def _production_add_cip(self, cip):
         # setdefault is a fun function
@@ -76,7 +82,7 @@ class lsgg(object):
 
     def neighbors(self,graph):
         _label_preprocessing(graph)
-        for e in self.substitute_old_cip(graph,self._get_all_cips(graph)):
+        for e in self.substitute_old_cip(graph, self._decompose(graph)):
             yield e
 
 

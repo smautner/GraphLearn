@@ -143,9 +143,9 @@ def makerows(graph_canvazes):
         res+= "".join(row) +'\n'
     return res
 
-#####
+#######
 # main printers
-####
+#######
 
 def make_picture(g, bw=False,colorlabel=None, contract=False,label='label',size=10,debug=None):
     if type(g) != list:
