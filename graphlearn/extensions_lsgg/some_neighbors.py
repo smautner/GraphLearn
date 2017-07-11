@@ -1,5 +1,5 @@
 import random
-import graphlearn2.graphlearn.lsgg as base_grammar
+import graphlearn.lsgg as base_grammar
 
 class lsgg(base_grammar.lsgg):
 

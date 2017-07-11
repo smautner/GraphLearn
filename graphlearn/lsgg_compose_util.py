@@ -14,7 +14,6 @@ def _edge_to_vertex(graph):
 
 
 
-
 from eden import fast_hash
 import networkx as nx
 

@@ -1,7 +1,6 @@
-from graphlearn2.graphlearn.utils_display import gprint
 import networkx as nx
-from graphlearn2.graphlearn.lsgg_extensions.some_neighbors import lsgg
-
+from graphlearn.extensions_lsgg.some_neighbors import lsgg
+from graphlearn.utils_display import gprint
 
 
 def edenize(g):

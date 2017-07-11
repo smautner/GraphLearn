@@ -2,11 +2,10 @@
 
 
 
-from graphlearn01.utils import ascii
-from estimators import simple_directed_estimator as sde
+from graphlearn.estimators import simple_directed_estimator as sde
 
 
-import sample
+import graphlearn.sample as sample
 import lsgg_test
 import networkx as nx
 
