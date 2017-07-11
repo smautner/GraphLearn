@@ -2,7 +2,7 @@
 
 
 
-from graphlearn.utils import ascii
+from graphlearn01.utils import ascii
 from estimators import simple_directed_estimator as sde
 
 
