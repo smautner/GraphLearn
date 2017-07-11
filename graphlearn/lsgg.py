@@ -32,7 +32,7 @@ class lsgg(object):
     ##########
     def fit(self,graphs):
         self._add(graphs)
-        self._clean()
+        self._filter()
 
     def _add(self, graphs):
         for g in graphs:
@@ -60,7 +60,11 @@ class lsgg(object):
         # setdefault is a fun function
         self.productions[cip.interface_hash].setdefault(cip.core_hash, cip).count+=1
 
-    def _clean(self):
+    def _filter(self):
+        '''
+        removes cores that have not been seen often enough
+        removes interfaces that have too few cores
+        '''
         for interface in self.productions.keys():
             for core in self.productions[interface].keys():
                 if self.productions[interface][core].count < self.filterargs['min_cip_count']:
