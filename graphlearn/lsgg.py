@@ -14,7 +14,12 @@ class lsgg(object):
                  decompositionargs={"radius_list":[0,2],"thickness_list":[2,4],'hash_bitmask':2**16-1},
                  filterargs={"min_cip_count":2,"min_interface_count":2}
                  ):
-
+        '''
+        Parameters
+        ----------
+        decompositionargs: remember that radius and distance need to be multiplied by 2
+        filterargs
+        '''
         self.productions=defaultdict(dict)
         self.decompositionargs=decompositionargs
         self.filterargs=filterargs
