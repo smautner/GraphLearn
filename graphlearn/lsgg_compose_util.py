@@ -1,9 +1,25 @@
 
+from toolz.functoolz import memoize
+import eden.graph as eg
+
+# note on the memoize... using id(args) fails,, not sure why
+@memoize(key=lambda args, kwargs: args)
+def _add_hlabel(graph):
+    eg._label_preprocessing(graph)
+
+@memoize(key=lambda args, kwargs: args)
+def _edge_to_vertex(graph):
+    return eg._edge_to_vertex_transform(graph)
+
+
 
 
 
 from eden import fast_hash
 import networkx as nx
+
+
+
 class CoreInterfacePair:
     """
     this is referred to throughout the code as cip
@@ -129,7 +145,8 @@ def extract_core_and_interface(root_node=None,
     -------
         makes a cip oO
     '''
-
+    graph = _edge_to_vertex(graph)
+    _add_hlabel(graph)
 
     # dict of relevant nodes
     horizon = radius+thickness
@@ -282,6 +299,7 @@ def core_substitution(graph, orig_cip_graph, new_cip_graph):
     subgraph is the interfaceregrion in that we will transplant
     new_cip_graph which is the interface and the new core
     """
+    graph=_edge_to_vertex(graph)
     assert( set(orig_cip_graph.nodes()) - set(graph.nodes()) == set([]) ), 'orig_cip_graph not in graph'
 
     # select only the interfaces of the cips
@@ -323,6 +341,8 @@ def core_substitution(graph, orig_cip_graph, new_cip_graph):
         merge(graph, str(k), '-' + str(v))
     # unionizing killed my labels so we need to relabel
 
+    graph=eg._revert_edge_to_vertex_transform(graph)
     re = nx.convert_node_labels_to_integers(graph)
     graph_clean(re)
+
     return re

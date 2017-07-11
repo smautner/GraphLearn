@@ -1,10 +1,6 @@
 import random
 import utils
 from collections import defaultdict
-from eden.graph import _label_preprocessing
-
-
-
 
 from lsgg_compose_util import extract_core_and_interface, core_substitution
 import utils_display as ud
@@ -24,8 +20,6 @@ class lsgg(object):
         self.filterargs=filterargs
 
 
-    def label_preprocessing(self,graph):
-        _label_preprocessing(graph)
 
     ###########
     #  FITTING
@@ -49,8 +43,7 @@ class lsgg(object):
                                                      hash_bitmask=self.decompositionargs['hash_bitmask'])
 
     def _decompose(self, graph):
-        _label_preprocessing(graph)
-        for root in [ n for n in graph.nodes() if 'edge' not in graph.node[n]]:
+        for root in graph.nodes():#[ n for n in graph.nodes() if 'edge' not in graph.node[n]]:
             for e in self._rooted_decompose(graph,root):
                 yield e
 
@@ -95,7 +88,6 @@ class lsgg(object):
                 (yield r) if r else logger.log(5,'lsgg: a substitution returned None')
 
     def neighbors(self,graph):
-        _label_preprocessing(graph)
         for e in self._neighbors_given_orig_cips(graph, self._decompose(graph)):
             yield e
 

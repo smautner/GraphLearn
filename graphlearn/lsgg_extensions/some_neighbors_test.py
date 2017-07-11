@@ -1,23 +1,19 @@
-
+from graphlearn2.graphlearn.utils_display import gprint
 import networkx as nx
 from graphlearn2.graphlearn.lsgg_extensions.some_neighbors import lsgg
 
-from graphlearn2.graphlearn.utils_display import gprint
-from eden.graph import _label_preprocessing
-from eden.graph import _edge_to_vertex_transform
 
 
 def edenize(g):
     for n in g.nodes():
         g.node[n]['label']=str(n)
-
     for a,b in g.edges():
         g[a][b]['label']='.'
-    return _edge_to_vertex_transform(g)
+    return g
+
 
 def prep_cip_extract(g):
     g= edenize(g)
-    _label_preprocessing(g)
     return g
 
 def get_grammar():
