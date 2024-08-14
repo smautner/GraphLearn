@@ -101,8 +101,9 @@ setup(
     package_data={},
     url='https://github.com/fabriziocosta/GraphLearn',
     license='LICENSE',
-    description='recombine network graphs',
-    #long_description=open('README.md').read(),
+    description='generative method on graphs via graph grammar',
+    long_description=open('README.md').read(),
+    long_description_content_type = 'text/markdown',
     install_requires=[
         "networkx",
         "toolz",
